@@ -1,10 +1,6 @@
 # RequirementsTxt
 
-- Python [`requirements.txt`](https://pip.readthedocs.io/en/1.1/requirements.html#requirements-file-format) generic iterator parser for [Nim.](https://nim-lang.org)
-- Python `RECORDS` file parser, is a custom header-less CSV file used by Python packages.
-- *No Regex used in the making of this film!*
-
-![](temp.png)
+![](https://raw.githubusercontent.com/juancarlospaco/nim-requirementstxt/master/temp.png)
 
 ![](https://img.shields.io/github/languages/count/juancarlospaco/nim-requirementstxt?logoColor=green&style=for-the-badge)
 ![](https://img.shields.io/github/languages/top/juancarlospaco/nim-requirementstxt?style=for-the-badge)
@@ -16,6 +12,10 @@
 ![](https://img.shields.io/github/commit-activity/y/juancarlospaco/nim-requirementstxt?style=for-the-badge)
 ![](https://img.shields.io/github/last-commit/juancarlospaco/nim-requirementstxt?style=for-the-badge)
 ![](https://img.shields.io/liberapay/patrons/juancarlospaco?style=for-the-badge)
+
+- Python [`requirements.txt`](https://pip.readthedocs.io/en/1.1/requirements.html#requirements-file-format) generic iterator parser for [Nim.](https://nim-lang.org)
+- Python `RECORDS` file parser, is a custom header-less CSV file used by Python packages.
+- *No Regex used in the making of this film!*
 
 
 # Use
