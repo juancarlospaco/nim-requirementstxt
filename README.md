@@ -20,7 +20,7 @@
 
 ```nim
 for it in requirements("requirements.txt"):  ## requirements is string
-  echo it
+  echo it  ## (line: 1, editable: false, specifier: true, vcs: "git", protocol: "https", version: "1.6.0", name: "numpy", url: "", blanks: 1, nested: 0, private: 0, extras: @["full"])
 
 for it in requirements(open("requirements.txt")): ## requirements is File
   echo it
