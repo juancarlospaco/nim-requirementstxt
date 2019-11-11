@@ -34,7 +34,7 @@ for it in requirements(newStringStream(staticRead("requirements.txt"))): ## requ
 
 ### Output
 
-Output yields 1 `tuple` per parsed line:
+Yields 1 `tuple` per parsed line:
 
 * `line` Current line being parsed (`42`, etc).
 * `editable` Boolean whether this requirement is *"editable"*.
