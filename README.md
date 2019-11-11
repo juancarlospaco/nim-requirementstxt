@@ -34,9 +34,9 @@ for it in requirements(newStringStream(staticRead("requirements.txt"))): ## requ
 
 ### Output
 
-- Output yields 1 `tuple` per line.
+Output yields 1 `tuple` per parsed line:
 
-* `line` Current line being parsed.
+* `line` Current line being parsed (`42`, etc).
 * `editable` Boolean whether this requirement is *"editable"*.
 * `specifier` Boolean whether a version specifier is used (`"flask>=1.5"` is `true`, `"flask"` is `false`)
 * `vcs` Distributed version control system used (`"git"`, `"hg"`, etc).
@@ -46,8 +46,8 @@ for it in requirements(newStringStream(staticRead("requirements.txt"))): ## requ
 * `uri` URL if this requirement of `Uri` type (`"https://github.com/user/repo.git"`, etc).
 * `extras` Sequence of strings with a list of extras (`"flask[extra1, extra2]"` is `["extra1", "extra2"]`)
 * `blanks` Current count of comments, blank lines, empty lines, etc.
-* `private` Current count of Private custom repositories (Not PYPI). Private repos not supported.
-* `nested` Current count of recursively Nested requirements.txt files. Nested requirements not supported.
+* `private` Current count of Private custom repositories (Not PYPI).
+* `nested` Current count of recursively Nested requirements.txt files.
 
 
 # Install
