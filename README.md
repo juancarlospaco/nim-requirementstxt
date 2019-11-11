@@ -49,6 +49,8 @@ Yields 1 `tuple` per parsed line:
 * `private` Current count of Private custom repositories (Not PYPI).
 * `nested` Current count of recursively Nested requirements.txt files.
 
+If you need a `seq` of `tuple` use `sequtils.toSeq`.
+
 
 # Install
 
