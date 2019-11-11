@@ -73,6 +73,8 @@ $ nimble test
 
 ```
 
+Test is using a [big and complex `requirements.txt`](https://github.com/juancarlospaco/nim-requirementstxt/blob/master/tests/requirements.txt).
+
 
 # Documentation
 
