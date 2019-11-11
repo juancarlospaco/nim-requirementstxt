@@ -41,13 +41,13 @@ Yields 1 `tuple` per parsed line:
 * `specifier` Boolean whether a version specifier is used (`"flask>=1.5"` is `true`, `"flask"` is `false`)
 * `vcs` Distributed version control system used (`"git"`, `"hg"`, etc).
 * `protocol` Network protocol for transports (`"http"`, `"https"`, `"ssh"`, etc)
-* `name` Package name parsed.
+* `name` Package name parsed (`"pytest"`, etc).
 * `version` Package version string (`"1.2.9"`, etc).
 * `uri` URL if this requirement of `Uri` type (`"https://github.com/user/repo.git"`, etc).
-* `extras` Sequence of strings with a list of extras (`"flask[extra1, extra2]"` is `["extra1", "extra2"]`)
-* `blanks` Current count of comments, blank lines, empty lines, etc.
+* `extras` Sequence of strings with a list of extras (`"flask[extra1, extra2]"` is `@["extra1", "extra2"]`)
+* `blanks` Current count of comments, blank lines, empty lines, etc (`42`, etc).
 * `private` Current count of Private custom repositories (Not PYPI).
-* `nested` Current count of recursively Nested requirements.txt files.
+* `nested` Current count of recursively Nested requirements.txt files (`42`, etc).
 
 If you need a `seq` of `tuple` use `sequtils.toSeq`.
 
