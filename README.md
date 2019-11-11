@@ -1,6 +1,6 @@
 # RequirementsTxt
 
-- Python [`requirements.txt` generic iterator parser](https://pip.readthedocs.io/en/1.1/requirements.html#requirements-file-format) [for Nim.](https://nim-lang.org)
+- Python [`requirements.txt`](https://pip.readthedocs.io/en/1.1/requirements.html#requirements-file-format) generic iterator parser for [Nim.](https://nim-lang.org)
 - Python `RECORDS` file parser, is a custom header-less CSV file used by Python packages.
 - *No Regex used in the making of this film!*
 
