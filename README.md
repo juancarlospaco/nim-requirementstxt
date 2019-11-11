@@ -29,6 +29,26 @@ for it in requirements(newStringStream(staticRead("requirements.txt"))): ## requ
   echo it
 ```
 
+1 Input argument can be `filename: string | StringStream | File`. Based from the official spec: https://pip.readthedocs.io/en/1.1/requirements.html
+
+
+### Output
+
+- Output yields 1 `tuple` per line.
+
+* `line` Current line being parsed.
+* `editable` Boolean whether this requirement is *"editable"*.
+* `specifier` Boolean whether a version specifier is used (`"flask>=1.5"` is `true`, `"flask"` is `false`)
+* `vcs` Distributed version control system used (`"git"`, `"hg"`, etc).
+* `protocol` Network protocol for transports (`"http"`, `"https"`, `"ssh"`, etc)
+* `name` Package name parsed.
+* `version` Package version string (`"1.2.9"`, etc).
+* `uri` URL if this requirement of `Uri` type (`"https://github.com/user/repo.git"`, etc).
+* `extras` Sequence of strings with a list of extras (`"flask[extra1, extra2]"` is `["extra1", "extra2"]`)
+* `blanks` Current count of comments, blank lines, empty lines, etc.
+* `private` Current count of Private custom repositories (Not PYPI). Private repos not supported.
+* `nested` Current count of recursively Nested requirements.txt files. Nested requirements not supported.
+
 
 # Install
 
@@ -53,6 +73,8 @@ $ nimble test
 
 
 # Documentation
+
+- `runnableExamples` included.
 
 ```
 nim doc requirementstxt.nim
