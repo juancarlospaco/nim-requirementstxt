@@ -102,4 +102,12 @@ nim doc requirementstxt.nim
 ![Stars over time](https://starchart.cc/juancarlospaco/nim-requirementstxt.svg)
 
 
+# FAQ
+
+- Why a generic iterator ?.
+
+Generic so you can use `string` or `StringStream` or `File`.
+`iterator` because `requirements.txt` are meant to have 1 dependency per line.
+
+
 [  ⬆️  ⬆️  ⬆️  ⬆️  ](#RequirementsTxt "Go to top")
