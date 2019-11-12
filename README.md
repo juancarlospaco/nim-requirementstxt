@@ -22,7 +22,7 @@
 
 ```nim
 for it in requirements("requirements.txt"):  ## requirements is string
-  echo it  ## (line: 1, editable: false, specifier: true, vcs: "git", protocol: "https", version: "1.6.0", name: "numpy", url: "", blanks: 1, nested: 0, private: 0, extras: @["full"])
+  echo it
 
 for it in requirements(open("requirements.txt")): ## requirements is File
   echo it
@@ -50,6 +50,12 @@ Yields 1 `tuple` per parsed line:
 * `blanks` Current count of comments, blank lines, empty lines, etc (`42`, etc).
 * `private` Current count of Private custom repositories (Not PYPI).
 * `nested` Current count of recursively Nested requirements.txt files (`42`, etc).
+
+**Example Output:**
+
+```nim
+(line: 9, editable: false, specifier: true, vcs: "git", protocol: "https", version: "1.6.0", name: "numpy", url: "https://github.com/user/repo.git", blanks: 1, nested: 0, private: 0, extras: @["full", "pdf"])
+```
 
 If you need a `seq` of `tuple` use `sequtils.toSeq`.
 
