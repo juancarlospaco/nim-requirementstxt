@@ -59,7 +59,7 @@ Yields 1 `tuple` per parsed line:
 (line: 9, editable: false, specifier: true, vcs: "git", protocol: "https", version: "1.6.0", name: "numpy", url: "https://github.com/user/repo.git", blanks: 1, nested: 0, private: 0, extras: @["full", "pdf"])
 ```
 
-If you need a `seq` of `tuple` use `sequtils.toSeq`.
+If you need a `seq` of `tuple` use `sequtils.toSeq`. It uses [Effects Tags](https://nim-lang.org/docs/manual.html#effect-system) `ReadIOEffect, WriteIOEffect`.
 
 
 # Install
