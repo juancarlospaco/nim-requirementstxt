@@ -113,7 +113,10 @@ nim doc requirementstxt.nim
 - Why a generic iterator ?.
 
 Generic so you can use `string` or `StringStream` or `File`.
+
 `iterator` because `requirements.txt` are meant to have 1 dependency per line.
+
+If you are familiar with Python, Nim `iterator` is like Python `generator`.
 
 
 [  ⬆️  ⬆️  ⬆️  ⬆️  ](#RequirementsTxt "Go to top")
