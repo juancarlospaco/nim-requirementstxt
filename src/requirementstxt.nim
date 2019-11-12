@@ -58,6 +58,7 @@ iterator requirements*(filename: string | StringStream | File):
       if likely(linelow.startsWith(e & "hg+https:")): result.protocol = "https"
       elif unlikely(linelow.startsWith(e & "hg+http:")): result.protocol = "http"
       elif linelow.startsWith(e & "hg+ssh:"): result.protocol = "ssh"
+      elif linelow.startsWith(e & "hg+static-http:"): result.protocol = "static-http"
     # BZR
     if likely(linelow.startsWith(e & "bzr+")):
       result.vcs = "bzr"
@@ -65,6 +66,9 @@ iterator requirements*(filename: string | StringStream | File):
       if likely(linelow.startsWith(e & "bzr+https:")): result.protocol = "https"
       elif unlikely(linelow.startsWith(e & "bzr+http:")): result.protocol = "http"
       elif linelow.startsWith(e & "bzr+ssh:"): result.protocol = "ssh"
+      elif linelow.startsWith(e & "bzr+sftp:"): result.protocol = "sftp"
+      elif linelow.startsWith(e & "bzr+ftp:"): result.protocol = "ftp"
+      elif linelow.startsWith(e & "bzr+lp:"): result.protocol = "lp"
     # SVN
     if likely(linelow.startsWith(e & "svn+")):
       result.vcs = "svn"
@@ -72,6 +76,7 @@ iterator requirements*(filename: string | StringStream | File):
       if likely(linelow.startsWith(e & "svn+https:")): result.protocol = "https"
       elif unlikely(linelow.startsWith(e & "svn+http:")): result.protocol = "http"
       elif linelow.startsWith(e & "svn+ssh:"): result.protocol = "ssh"
+      elif linelow.startsWith(e & "svn+svn:"): result.protocol = "svn"
     else: # Non-VCS, just the package name with out without the version
       if unlikely("[" in linelow and "]" in linelow): result.extras = line.strip.split("[")[1].split("]")[0].replace(" ", "").split(",")
       if "==" in linelow:
