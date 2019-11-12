@@ -140,7 +140,7 @@ Generic so you can use `string` or `StringStream` or `File`.
 
 `iterator` because `requirements.txt` are meant to have 1 dependency per line.
 
-If you are familiar with Python, Nim `iterator` is like Python `generator`.
+If you are familiar with Python, Nim `iterator` is like Python `generator`, Nim `tuple` is like Python `NamedTuple`.
 
 
 [  ⬆️  ⬆️  ⬆️  ⬆️  ](#RequirementsTxt "Go to top")
