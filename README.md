@@ -114,6 +114,7 @@ nim doc requirementstxt.nim
 - bzr+sftp
 - bzr+ftp
 - bzr+lp
+- No DVCS
 
 
 # Requisites
