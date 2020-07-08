@@ -1,6 +1,6 @@
 import strutils, os, uri, parsecsv, streams
 
-iterator requirements*(filename: string | StringStream | File, versionReplace: openArray[array[2, string]] = []):
+iterator requirements*(filename: string | StringStream | File, versionReplace: varargs[(string, string)] = []):
   tuple[line: byte, editable: bool, specifier, vcs, protocol, version, name: string, url: Uri, blanks, nested, private: byte, extras: seq[string]] {.tags: [ReadIOEffect, WriteIOEffect].} =
   ## Python ``requirements.txt`` iterator parser for Nim.
   ## This and ``requirements.txt`` supports it, but ``setup.py`` does not: ``git+https://github.com/user/repo.git@master#egg=loggable``.
