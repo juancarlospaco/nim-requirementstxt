@@ -30,6 +30,9 @@ for it in requirements(open("requirements.txt")): ## requirements is File
 
 for it in requirements(newStringStream(staticRead("requirements.txt"))): ## requirements is StringStream
   echo it
+
+for it in requirements("requirements.txt", [("*", "0")]):  ## "1.*.*" becomes "1.0.0", uses multiReplace
+  echo it
 ```
 
 1 Input argument can be `filename: string | StringStream | File`. Based from the official spec: https://pip.readthedocs.io/en/1.1/requirements.html
@@ -41,7 +44,7 @@ Yields 1 `tuple` per parsed line:
 
 * `line` Current line being parsed (`42`, etc).
 * `editable` Boolean whether this requirement is *"editable"*.
-* `specifier` Boolean whether a version specifier is used (`"flask>=1.5"` is `true`, `"flask"` is `false`)
+* `specifier` String version specifier (For `"flask>=1.5"` is `>=`)
 * `vcs` Distributed version control system used (`"git"`, `"hg"`, etc).
 * `protocol` Network protocol for transports (`"http"`, `"https"`, `"ssh"`, etc)
 * `name` Package name parsed (`"pytest"`, etc).
