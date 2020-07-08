@@ -1,14 +1,14 @@
 import strutils, os, uri, parsecsv, streams
 
 iterator requirements*(filename: string | StringStream | File, versionReplace: openArray[(string, string)] = []):
-  tuple[line: byte, editable, specifier: bool, vcs, protocol, version, name: string, url: Uri, blanks, nested, private: byte, extras: seq[string]] {.tags: [ReadIOEffect, WriteIOEffect].} =
+  tuple[line: byte, editable: bool, specifier, vcs, protocol, version, name: string, url: Uri, blanks, nested, private: byte, extras: seq[string]] {.tags: [ReadIOEffect, WriteIOEffect].} =
   ## Python ``requirements.txt`` iterator parser for Nim.
   ## This and ``requirements.txt`` supports it, but ``setup.py`` does not: ``git+https://github.com/user/repo.git@master#egg=loggable``.
   ## Based from the official spec: https://pip.readthedocs.io/en/1.1/requirements.html
   ##
   ## * ``line`` Current line being parsed.
   ## * ``editable`` Boolean whether this requirement is "editable".
-  ## * ``specifier`` Boolean whether a version specifier is used ("flask>=1.5" is true or "flask" is false)
+  ## * ``specifier`` String version specifier is used (For "flask>=1.5" is ">=")
   ## * ``vcs`` Distributed version control system used (git, hg, etc).
   ## * ``protocol`` Network protocol for transports (http, https, ssh, etc)
   ## * ``name`` Package name parsed.
@@ -80,32 +80,32 @@ iterator requirements*(filename: string | StringStream | File, versionReplace: o
     else: # Non-VCS, just the package name with out without the version
       if unlikely("[" in linelow and "]" in linelow): result.extras = line.strip.split("[")[1].split("]")[0].replace(" ", "").split(",")
       if "==" in linelow:
-        result.specifier = true
+        result.specifier = "=="
         if linelow.split("==").len == 2:
           result.name = line.split("==")[0]
           result.version = line.split("==")[1]
       elif ">=" in linelow:
-        result.specifier = true
+        result.specifier = ">="
         if linelow.split(">=").len == 2:
           result.name = line.split(">=")[0]
           result.version = line.split(">=")[1]
       elif "<=" in linelow:
-        result.specifier = true
+        result.specifier = "<="
         if linelow.split("<=").len == 2:
           result.name = line.split("<=")[0]
           result.version = line.split("<=")[1]
       elif "<" in linelow:
-        result.specifier = true
+        result.specifier = "<"
         if linelow.split("<").len == 2:
           result.name = line.split("<")[0]
           result.version = line.split("<")[1]
       elif ">" in linelow:
-        result.specifier = true
+        result.specifier = ">"
         if linelow.split(">").len == 2:
           result.name = line.split(">")[0]
           result.version = line.split(">")[1]
       elif "!=" in linelow:
-        result.specifier = true
+        result.specifier = "!="
         if linelow.split("!=").len == 2:
           result.name = line.split("!=")[0]
           result.version = line.split("!=")[1]
