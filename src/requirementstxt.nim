@@ -1,4 +1,4 @@
-import strutils, uri, parsecsv
+import strutils, uri
 
 iterator requirements*(content: string, versionReplace: openArray[(string, string)] = []):
   tuple[line: byte, editable: bool, specifier, vcs, protocol, version, name: string, url: Uri, blanks, nested, private: byte, extras: seq[string]] {.tags: [ReadIOEffect, WriteIOEffect].} =
@@ -18,11 +18,9 @@ iterator requirements*(content: string, versionReplace: openArray[(string, strin
   ## * ``blanks`` Current count of comments, blank lines, empty lines, etc.
   ## * ``private`` Current count of Private custom repositories (Not PYPI). Private repos not supported.
   ## * ``nested`` Current count of recursively Nested requirements.txt files. Nested requirements not supported.
-  runnableExamples:
-    for it in requirements(readFile("requirements.txt")): echo it
   var i, b, n, p: byte
   var linelow, e: string
-  for line in content.lines:
+  for line in content.splitLines:
     var result = (line: i, editable: false, specifier: "", vcs: "", protocol: "", version: "", name: "", url: parseUri(""), blanks: b, nested: n, private: p, extras: @[""])
     inc i
     linelow = line.toLowerAscii.strip  # line lowercased for comparisons.
@@ -109,12 +107,3 @@ iterator requirements*(content: string, versionReplace: openArray[(string, strin
         result.name = line.strip
     if unlikely(versionReplace.len > 0): result.version = result.version.multiReplace(versionReplace)
     yield result
-
-proc parseRecord*(filename: string, skipInitialSpace = false): seq[seq[string]] {.inline.} =
-  ## Parse ``RECORD`` files from Python packages, they are custom header-less CSV.
-  assert filename.len > 0, "filename must not be empty string"
-  var parser = create(CsvParser, sizeOf CsvParser)
-  parser[].open(filename, skipInitialSpace = skipInitialSpace)
-  while readRow(parser[]): result.add parser[].row
-  parser[].close()
-  dealloc parser
