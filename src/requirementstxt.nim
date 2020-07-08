@@ -1,6 +1,6 @@
-import strutils, os, uri, parsecsv, streams
+import strutils, uri, parsecsv
 
-iterator requirements*(filename: string | StringStream | File, versionReplace: openArray[(string, string)] = []):
+iterator requirements*(content: string, versionReplace: openArray[(string, string)] = []):
   tuple[line: byte, editable: bool, specifier, vcs, protocol, version, name: string, url: Uri, blanks, nested, private: byte, extras: seq[string]] {.tags: [ReadIOEffect, WriteIOEffect].} =
   ## Python ``requirements.txt`` iterator parser for Nim.
   ## This and ``requirements.txt`` supports it, but ``setup.py`` does not: ``git+https://github.com/user/repo.git@master#egg=loggable``.
@@ -19,14 +19,10 @@ iterator requirements*(filename: string | StringStream | File, versionReplace: o
   ## * ``private`` Current count of Private custom repositories (Not PYPI). Private repos not supported.
   ## * ``nested`` Current count of recursively Nested requirements.txt files. Nested requirements not supported.
   runnableExamples:
-    for it in requirements("requirements.txt"): echo it       ## requirements is string
-    for it in requirements(open("requirements.txt")): echo it ## requirements is File
-  var f = when filename is File or filename is StringStream: filename else: open(filename)
-  when filename isnot File:
-    defer: close(f)
+    for it in requirements(readFile("requirements.txt")): echo it
   var i, b, n, p: byte
-  var line, linelow, e: string
-  while f.readLine(line):
+  var linelow, e: string
+  for line in content.lines:
     var result = (line: i, editable: false, specifier: "", vcs: "", protocol: "", version: "", name: "", url: parseUri(""), blanks: b, nested: n, private: p, extras: @[""])
     inc i
     linelow = line.toLowerAscii.strip  # line lowercased for comparisons.
