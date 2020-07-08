@@ -27,7 +27,7 @@ iterator requirements*(filename: string | StringStream | File, versionReplace: o
   var i, b, n, p: byte
   var line, linelow, e: string
   while f.readLine(line):
-    var result = (line: i, editable: false, specifier: false, vcs: "", protocol: "", version: "", name: "", url: parseUri(""), blanks: b, nested: n, private: p, extras: @[""])
+    var result = (line: i, editable: false, specifier: string, vcs: "", protocol: "", version: "", name: "", url: parseUri(""), blanks: b, nested: n, private: p, extras: @[""])
     inc i
     linelow = line.toLowerAscii.strip  # line lowercased for comparisons.
     if unlikely(linelow.len == 0 or linelow.startsWith('#') or linelow.startsWith("-z") or linelow.startsWith("--always-unzip")):
