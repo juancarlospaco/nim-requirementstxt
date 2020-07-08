@@ -113,11 +113,11 @@ iterator requirements*(filename: string | StringStream | File):
         result.name = line.strip
     yield result
 
-proc parseRecord*(filename: string): seq[seq[string]] {.inline.} =
+proc parseRecord*(filename: string, skipInitialSpace = false): seq[seq[string]] {.inline.} =
   ## Parse ``RECORD`` files from Python packages, they are custom header-less CSV.
-  var parser: CsvParser
-  var stream = newFileStream(filename, fmRead)
-  assert stream != nil, "Failed to parse a RECORD from file to string stream"
-  open(parser, stream, filename)
-  while readRow(parser): result.add parser.row
-  close(parser)
+  assert filename.len > 0, "filename must not be empty string"
+  var parser = create(CsvParser, sizeOf CsvParser)
+  parser[].open(filename, skipInitialSpace = skipInitialSpace)
+  while readRow(parser[]): result.add parser[].row
+  parser[].close()
+  dealloc parser

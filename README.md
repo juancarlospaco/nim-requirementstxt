@@ -5,7 +5,6 @@
 ![](https://img.shields.io/github/languages/count/juancarlospaco/nim-requirementstxt?logoColor=green&style=for-the-badge)
 ![](https://img.shields.io/github/languages/top/juancarlospaco/nim-requirementstxt?style=for-the-badge)
 ![](https://img.shields.io/github/stars/juancarlospaco/nim-requirementstxt?style=for-the-badge)
-![](https://img.shields.io/maintenance/yes/2019?style=for-the-badge)
 ![](https://img.shields.io/github/languages/code-size/juancarlospaco/nim-requirementstxt?style=for-the-badge)
 ![](https://img.shields.io/github/issues-raw/juancarlospaco/nim-requirementstxt?style=for-the-badge)
 ![](https://img.shields.io/github/issues-pr-raw/juancarlospaco/nim-requirementstxt?style=for-the-badge)
