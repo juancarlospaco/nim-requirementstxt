@@ -1,6 +1,6 @@
 import strutils, os, uri, parsecsv, streams
 
-iterator requirements*(filename: string | StringStream | File, versionReplace: varargs[(string, string)] = []):
+iterator requirements*(filename: string | StringStream | File, versionReplace: openArray[(string, string)] = []):
   tuple[line: byte, editable: bool, specifier, vcs, protocol, version, name: string, url: Uri, blanks, nested, private: byte, extras: seq[string]] {.tags: [ReadIOEffect, WriteIOEffect].} =
   ## Python ``requirements.txt`` iterator parser for Nim.
   ## This and ``requirements.txt`` supports it, but ``setup.py`` does not: ``git+https://github.com/user/repo.git@master#egg=loggable``.
@@ -27,7 +27,7 @@ iterator requirements*(filename: string | StringStream | File, versionReplace: v
   var i, b, n, p: byte
   var line, linelow, e: string
   while f.readLine(line):
-    var result = (line: i, editable: false, specifier: string, vcs: "", protocol: "", version: "", name: "", url: parseUri(""), blanks: b, nested: n, private: p, extras: @[""])
+    var result = (line: i, editable: false, specifier: "", vcs: "", protocol: "", version: "", name: "", url: parseUri(""), blanks: b, nested: n, private: p, extras: @[""])
     inc i
     linelow = line.toLowerAscii.strip  # line lowercased for comparisons.
     if unlikely(linelow.len == 0 or linelow.startsWith('#') or linelow.startsWith("-z") or linelow.startsWith("--always-unzip")):
