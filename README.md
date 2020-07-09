@@ -27,7 +27,7 @@ for it in requirements(readFile("requirements.txt")):
 for it in requirements(staticRead("requirements.txt")):
   echo it
 
-for it in requirements("requirements.txt", [("*", "0")]):  ## "1.*.*" becomes "1.0.0", uses multiReplace
+for it in requirements(readFile("requirements.txt"), [("*", "0")]):  ## "1.*.*" becomes "1.0.0", uses multiReplace
   echo it
 ```
 
