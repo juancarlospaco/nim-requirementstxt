@@ -18,92 +18,102 @@ iterator requirements*(content: string, versionReplace: openArray[(string, strin
   ## * ``blanks`` Current count of comments, blank lines, empty lines, etc.
   ## * ``private`` Current count of Private custom repositories (Not PYPI). Private repos not supported.
   ## * ``nested`` Current count of recursively Nested requirements.txt files. Nested requirements not supported.
-  var i, b, n, p: byte
-  var linelow, e: string
+  var i = create(byte, sizeOf byte)
+  var b = create(byte, sizeOf byte)
+  var n = create(byte, sizeOf byte)
+  var p = create(byte, sizeOf byte)
+  var e = create(string, sizeOf string)
+  var linelow = create(string, sizeOf string)
   for line in content.splitLines:
-    var result = (line: i, editable: false, specifier: "", vcs: "", protocol: "", version: "", name: "", url: parseUri(""), blanks: b, nested: n, private: p, extras: @[""])
-    inc i
-    linelow = line.toLowerAscii.strip  # line lowercased for comparisons.
-    if unlikely(linelow.len == 0 or linelow.startsWith('#') or linelow.startsWith("-z") or linelow.startsWith("--always-unzip")):
-      inc b # Comments, blank lines, empty lines, etc.
-      dec i
+    var result = (line: i[], editable: false, specifier: "", vcs: "", protocol: "", version: "", name: "", url: parseUri(""), blanks: b[], nested: n[], private: p[], extras: @[""])
+    inc i[]
+    linelow[] = line.toLowerAscii.strip  # line lowercased for comparisons.
+    if unlikely(linelow[].len == 0 or linelow[].startsWith('#') or linelow[].startsWith("-z") or linelow[].startsWith("--always-unzip")):
+      inc b[] # Comments, blank lines, empty lines, etc.
+      dec i[]
       continue
-    elif unlikely(linelow.startsWith("-r ") or linelow.startsWith("--requirement ")):
-      inc n  # Nested requirements not supported.
+    elif unlikely(linelow[].startsWith("-r ") or linelow[].startsWith("--requirement ")):
+      inc n[]  # Nested requirements not supported.
       continue  # requirements(getCurrentDir() / line.split()[1])  # TODO: What to do???
-    elif unlikely(linelow.startsWith("-f") or linelow.startsWith("--find-links") or linelow.startsWith("-i") or
-      linelow.startsWith("--index-url") or linelow.startsWith("--extra-index-url") or linelow.startsWith("--no-index")):
-      inc p # Private repos not supported.
+    elif unlikely(linelow[].startsWith("-f") or linelow[].startsWith("--find-links") or linelow[].startsWith("-i") or
+      linelow[].startsWith("--index-url") or linelow[].startsWith("--extra-index-url") or linelow[].startsWith("--no-index")):
+      inc p[] # Private repos not supported.
       continue
-    result.editable = linelow.startsWith("-e ")
-    e = if result.editable: "-e " else: ""
+    result.editable = linelow[].startsWith("-e ")
+    e[] = if result.editable: "-e " else: ""
     # Git
-    if likely(linelow.startsWith(e & "git+")):
+    if likely(linelow[].startsWith(e[] & "git+")):
       result.vcs = "git"
-      result.url = parseUri(line[len(e & "git+")..^1])
-      if likely(linelow.startsWith(e & "git+https:")): result.protocol = "https"
-      elif unlikely(linelow.startsWith(e & "git+http:")): result.protocol = "http"
-      if unlikely(linelow.startsWith(e & "git+git:")): result.protocol = "git"
-      elif linelow.startsWith(e & "git+ssh:"): result.protocol = "ssh"
+      result.url = parseUri(line[len(e[] & "git+")..^1])
+      if likely(linelow[].startsWith(e[] & "git+https:")): result.protocol = "https"
+      elif unlikely(linelow[].startsWith(e[] & "git+http:")): result.protocol = "http"
+      if unlikely(linelow[].startsWith(e[] & "git+git:")): result.protocol = "git"
+      elif linelow[].startsWith(e[] & "git+ssh:"): result.protocol = "ssh"
     # HG
-    if unlikely(linelow.startsWith(e & "hg+")):
+    if unlikely(linelow[].startsWith(e[] & "hg+")):
       result.vcs = "hg"
-      result.url = parseUri(line[len(e & "hg+")..^1])
-      if likely(linelow.startsWith(e & "hg+https:")): result.protocol = "https"
-      elif unlikely(linelow.startsWith(e & "hg+http:")): result.protocol = "http"
-      elif linelow.startsWith(e & "hg+ssh:"): result.protocol = "ssh"
-      elif linelow.startsWith(e & "hg+static-http:"): result.protocol = "static-http"
+      result.url = parseUri(line[len(e[] & "hg+")..^1])
+      if likely(linelow[].startsWith(e[] & "hg+https:")): result.protocol = "https"
+      elif unlikely(linelow[].startsWith(e[] & "hg+http:")): result.protocol = "http"
+      elif linelow[].startsWith(e[] & "hg+ssh:"): result.protocol = "ssh"
+      elif linelow[].startsWith(e[] & "hg+static-http:"): result.protocol = "static-http"
     # BZR
-    if likely(linelow.startsWith(e & "bzr+")):
+    if likely(linelow[].startsWith(e[] & "bzr+")):
       result.vcs = "bzr"
-      result.url = parseUri(line[len(e & "bzr+")..^1])
-      if likely(linelow.startsWith(e & "bzr+https:")): result.protocol = "https"
-      elif unlikely(linelow.startsWith(e & "bzr+http:")): result.protocol = "http"
-      elif linelow.startsWith(e & "bzr+ssh:"): result.protocol = "ssh"
-      elif linelow.startsWith(e & "bzr+sftp:"): result.protocol = "sftp"
-      elif linelow.startsWith(e & "bzr+ftp:"): result.protocol = "ftp"
-      elif linelow.startsWith(e & "bzr+lp:"): result.protocol = "lp"
+      result.url = parseUri(line[len(e[] & "bzr+")..^1])
+      if likely(linelow[].startsWith(e[] & "bzr+https:")): result.protocol = "https"
+      elif unlikely(linelow[].startsWith(e[] & "bzr+http:")): result.protocol = "http"
+      elif linelow[].startsWith(e[] & "bzr+ssh:"): result.protocol = "ssh"
+      elif linelow[].startsWith(e[] & "bzr+sftp:"): result.protocol = "sftp"
+      elif linelow[].startsWith(e[] & "bzr+ftp:"): result.protocol = "ftp"
+      elif linelow[].startsWith(e[] & "bzr+lp:"): result.protocol = "lp"
     # SVN
-    if likely(linelow.startsWith(e & "svn+")):
+    if likely(linelow[].startsWith(e[] & "svn+")):
       result.vcs = "svn"
-      result.url = parseUri(line[len(e & "svn+")..^1])
-      if likely(linelow.startsWith(e & "svn+https:")): result.protocol = "https"
-      elif unlikely(linelow.startsWith(e & "svn+http:")): result.protocol = "http"
-      elif linelow.startsWith(e & "svn+ssh:"): result.protocol = "ssh"
-      elif linelow.startsWith(e & "svn+svn:"): result.protocol = "svn"
+      result.url = parseUri(line[len(e[] & "svn+")..^1])
+      if likely(linelow[].startsWith(e[] & "svn+https:")): result.protocol = "https"
+      elif unlikely(linelow[].startsWith(e[] & "svn+http:")): result.protocol = "http"
+      elif linelow[].startsWith(e[] & "svn+ssh:"): result.protocol = "ssh"
+      elif linelow[].startsWith(e[] & "svn+svn:"): result.protocol = "svn"
     else: # Non-VCS, just the package name with out without the version
-      if unlikely("[" in linelow and "]" in linelow): result.extras = line.strip.split("[")[1].split("]")[0].replace(" ", "").split(",")
-      if "==" in linelow:
+      if unlikely("[" in linelow[] and "]" in linelow[]): result.extras = line.strip.split("[")[1].split("]")[0].replace(" ", "").split(",")
+      if "==" in linelow[]:
         result.specifier = "=="
-        if linelow.split("==").len == 2:
+        if linelow[].split("==").len == 2:
           result.name = line.split("==")[0]
           result.version = line.split("==")[1]
-      elif ">=" in linelow:
+      elif ">=" in linelow[]:
         result.specifier = ">="
-        if linelow.split(">=").len == 2:
+        if linelow[].split(">=").len == 2:
           result.name = line.split(">=")[0]
           result.version = line.split(">=")[1]
-      elif "<=" in linelow:
+      elif "<=" in linelow[]:
         result.specifier = "<="
-        if linelow.split("<=").len == 2:
+        if linelow[].split("<=").len == 2:
           result.name = line.split("<=")[0]
           result.version = line.split("<=")[1]
-      elif "<" in linelow:
+      elif "<" in linelow[]:
         result.specifier = "<"
-        if linelow.split("<").len == 2:
+        if linelow[].split("<").len == 2:
           result.name = line.split("<")[0]
           result.version = line.split("<")[1]
-      elif ">" in linelow:
+      elif ">" in linelow[]:
         result.specifier = ">"
-        if linelow.split(">").len == 2:
+        if linelow[].split(">").len == 2:
           result.name = line.split(">")[0]
           result.version = line.split(">")[1]
-      elif "!=" in linelow:
+      elif "!=" in linelow[]:
         result.specifier = "!="
-        if linelow.split("!=").len == 2:
+        if linelow[].split("!=").len == 2:
           result.name = line.split("!=")[0]
           result.version = line.split("!=")[1]
       else:
         result.name = line.strip
     if unlikely(versionReplace.len > 0): result.version = result.version.multiReplace(versionReplace)
     yield result
+  dealloc linelow
+  dealloc i
+  dealloc b
+  dealloc n
+  dealloc p
+  dealloc e
