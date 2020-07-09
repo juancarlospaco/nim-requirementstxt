@@ -1,4 +1,4 @@
-import strutils, uri
+import strutils, uri, parsecsv
 
 iterator requirements*(content: string, versionReplace: openArray[(string, string)] = []):
   tuple[line: byte, editable: bool, specifier, vcs, protocol, version, name: string, url: Uri, blanks, nested, private: byte, extras: seq[string]] {.tags: [ReadIOEffect, WriteIOEffect].} =
@@ -117,3 +117,12 @@ iterator requirements*(content: string, versionReplace: openArray[(string, strin
   dealloc n
   dealloc p
   dealloc e
+
+proc parseRecord*(filename: string, skipInitialSpace = false): seq[seq[string]] {.inline.} =
+  ## Parse ``RECORD`` files from Python packages, they are custom header-less CSV.
+  assert filename.len > 0, "filename must not be empty string"
+  var parser = create(CsvParser, sizeOf CsvParser)
+  parser[].open(filename, skipInitialSpace = skipInitialSpace)
+  while readRow(parser[]): result.add parser[].row
+  parser[].close()
+  dealloc parser
