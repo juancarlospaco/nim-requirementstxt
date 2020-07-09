@@ -21,20 +21,17 @@
 # Use
 
 ```nim
-for it in requirements("requirements.txt"):  ## requirements is string
+for it in requirements(readFile("requirements.txt")):
   echo it
 
-for it in requirements(open("requirements.txt")): ## requirements is File
-  echo it
-
-for it in requirements(newStringStream(staticRead("requirements.txt"))): ## requirements is StringStream
+for it in requirements(staticRead("requirements.txt")):
   echo it
 
 for it in requirements("requirements.txt", [("*", "0")]):  ## "1.*.*" becomes "1.0.0", uses multiReplace
   echo it
 ```
 
-1 Input argument can be `filename: string | StringStream | File`. Based from the official spec: https://pip.readthedocs.io/en/1.1/requirements.html
+1 Input argument can be `filename: string`. Based from the official spec: https://pip.readthedocs.io/en/1.1/requirements.html
 
 
 ### Output
