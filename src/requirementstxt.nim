@@ -18,12 +18,12 @@ iterator requirements*(content: string, versionReplace: openArray[(string, strin
   ## * ``blanks`` Current count of comments, blank lines, empty lines, etc.
   ## * ``private`` Current count of Private custom repositories (Not PYPI). Private repos not supported.
   ## * ``nested`` Current count of recursively Nested requirements.txt files. Nested requirements not supported.
-  var i = create(byte, sizeOf byte)
-  var b = create(byte, sizeOf byte)
-  var n = create(byte, sizeOf byte)
-  var p = create(byte, sizeOf byte)
-  var e = create(string, sizeOf string)
-  var linelow = create(string, sizeOf string)
+  var i = create(byte)
+  var b = create(byte)
+  var n = create(byte)
+  var p = create(byte)
+  var e = create(string)
+  var linelow = create(string)
   for line in content.splitLines:
     var result = (line: i[], editable: false, specifier: "", vcs: "", protocol: "", version: "", name: "", url: parseUri(""), blanks: b[], nested: n[], private: p[], extras: @[""])
     inc i[]
@@ -121,7 +121,7 @@ iterator requirements*(content: string, versionReplace: openArray[(string, strin
 proc parseRecord*(filename: string, skipInitialSpace = false): seq[seq[string]] {.inline.} =
   ## Parse ``RECORD`` files from Python packages, they are custom header-less CSV.
   assert filename.len > 0, "filename must not be empty string"
-  var parser = create(CsvParser, sizeOf CsvParser)
+  var parser {.noalias.} = create(CsvParser)
   parser[].open(filename, skipInitialSpace = skipInitialSpace)
   while readRow(parser[]): result.add parser[].row
   parser[].close()
